@@ -14,8 +14,11 @@
 
     const obj = { foo: { bar: { baz: 'baz' } } }
     const r1 = reactive(obj)
-    const r2 = shallowReactive(obj)
-    const r3 = readonly(obj)
-    const r4 = shallowReadonly(obj)
+
+    effect(() => {})
+
+    // const r2 = shallowReactive(obj)
+    // const r3 = readonly(obj)
+    // const r4 = shallowReadonly(obj)
   </script>
 </html>
