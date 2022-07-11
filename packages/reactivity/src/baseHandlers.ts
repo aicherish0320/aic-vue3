@@ -1,4 +1,5 @@
 import { extend } from '@vue/shared'
+import { track, trigger } from './effect'
 import { reactive, readonly } from './reactive'
 
 const get = createGetter()
@@ -17,6 +18,7 @@ function createGetter(isReadonly = false, isShallow = false) {
   return function get(target, key, receiver) {
     const ret = Reflect.get(target, key, receiver)
     if (!isReadonly) {
+      track(target, 'get', key)
     }
     // 不需要递归
     if (isShallow) {
@@ -30,7 +32,7 @@ function createGetter(isReadonly = false, isShallow = false) {
 function createSetter() {
   return function set(target, key, value, receiver) {
     const ret = Reflect.set(target, key, value, receiver)
-    console.log('set >>> ', key, value)
+    trigger(target, key, value)
     return ret
   }
 }

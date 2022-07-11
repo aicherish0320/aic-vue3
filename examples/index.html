@@ -9,13 +9,17 @@
   <body></body>
   <script src="../node_modules/@vue/reactivity/dist/reactivity.global.js"></script>
   <script>
-    const { reactive, shallowReactive, readonly, shallowReadonly } =
+    const { reactive, shallowReactive, readonly, shallowReadonly, effect } =
       VueReactivity
 
-    const obj = { foo: { bar: { baz: 'baz' } } }
+    const obj = { name: 'aic', age: 25, foo: { bar: { baz: 'baz' } } }
     const r1 = reactive(obj)
 
-    effect(() => {})
+    effect(() => {
+      console.log(r1.name)
+      console.log(r1.age)
+      console.log(r1.name)
+    })
 
     // const r2 = shallowReactive(obj)
     // const r3 = readonly(obj)
