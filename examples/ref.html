@@ -11,10 +11,10 @@
   </body>
   <script src="../node_modules/@vue/reactivity/dist/reactivity.global.js"></script>
   <script>
-    const { effect, ref, reactive, toRef } = VueReactivity
+    const { effect, ref, reactive, toRef, toRefs } = VueReactivity
 
-    const obj = reactive({ foo: 'bar' })
-    const val = toRef(obj, 'foo')
+    const obj = reactive({ foo: 'foo', bar: 'bar' })
+    const val = toRefs(obj, 'foo')
     console.log('val >>> ', val)
   </script>
 </html>
