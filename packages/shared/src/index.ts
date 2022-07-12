@@ -9,3 +9,5 @@ export const hasOwn = (target, key) =>
   Object.prototype.hasOwnProperty.call(target, key)
 
 export const hasChanged = (oldVal, val) => oldVal !== val
+
+export const isInteger = (key) => parseInt(key) + '' === key

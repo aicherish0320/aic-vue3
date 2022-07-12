@@ -12,14 +12,21 @@
     const { reactive, shallowReactive, readonly, shallowReadonly, effect } =
       VueReactivity
 
-    const obj = { name: 'aic', age: 25, foo: { bar: { baz: 'baz' } } }
+    const obj = {
+      name: 'aic',
+      age: 25,
+      foo: { bar: 'bar' },
+      arr: [1, 2, 3]
+    }
     const r1 = reactive(obj)
 
     effect(() => {
-      console.log(r1.name)
-      console.log(r1.age)
-      console.log(r1.name)
+      console.log('effect >>> ', JSON.stringify(r1.arr))
     })
+
+    setTimeout(() => {
+      r1.arr.push(4)
+    }, 1000)
 
     // const r2 = shallowReactive(obj)
     // const r3 = readonly(obj)

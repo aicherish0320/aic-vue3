@@ -1,4 +1,4 @@
-import { extend } from '@vue/shared'
+import { extend, hasChanged, hasOwn, isArray, isInteger } from '@vue/shared'
 import { track, trigger } from './effect'
 import { reactive, readonly } from './reactive'
 
@@ -31,8 +31,22 @@ function createGetter(isReadonly = false, isShallow = false) {
 }
 function createSetter() {
   return function set(target, key, value, receiver) {
+    const oldValue = target[key]
+
+    // 如果是新增也要触发更新
+    let hadKey =
+      isArray(target) && isInteger(key)
+        ? key < target.length
+        : hasOwn(target, key)
+
     const ret = Reflect.set(target, key, value, receiver)
-    trigger(target, key, value)
+
+    if (!hadKey) {
+      trigger(target, key, value, 'add')
+    } else if (hasChanged(oldValue, value)) {
+      trigger(target, key, value, 'set')
+    }
+
     return ret
   }
 }

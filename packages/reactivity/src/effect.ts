@@ -1,3 +1,5 @@
+import { isArray, isInteger } from '@vue/shared'
+
 export function effect(fn, options: any = {}) {
   const effect = createReactiveEffect(fn, options)
 
@@ -31,6 +33,7 @@ export function track(target, type, key) {
   if (!activeEffect) {
     return
   }
+
   let depsMap = targetMap.get(target)
   if (!depsMap) {
     targetMap.set(target, (depsMap = new Map()))
@@ -43,11 +46,41 @@ export function track(target, type, key) {
     dep.add(activeEffect)
   }
 }
-export function trigger(target, key, value) {
+export function trigger(target, key, value, type) {
   const depsMap = targetMap.get(target)
   if (!depsMap) {
     return
   }
-  const effects = depsMap.get(key) || []
-  effects.forEach((effect) => effect())
+
+  const effectsQueue = new Set()
+  const add = (effectsToAdd) => {
+    if (effectsToAdd) {
+      effectsToAdd.forEach((effect) => effectsQueue.add(effect))
+    }
+  }
+
+  // 这种情况是 effect 中取了 arr[2] 在修改中，arr.length = 1
+  if (isArray(target) && key === 'length') {
+    depsMap.forEach((dep, depKey) => {
+      if (depKey === 'length' || value < depKey) {
+        // dep.forEach((effect) => effect())
+        add(dep)
+      }
+    })
+  } else {
+    // 新增逻辑
+    if (type === 'add') {
+      if (isArray(target) && isInteger(key)) {
+        // const effects = depsMap.get('length')
+        // effects.forEach((effect) => effect())
+        add(depsMap.get('length'))
+      }
+    } else {
+      // const effects = depsMap.get(key) || []
+      // effects.forEach((effect) => effect())
+      add(depsMap.get(key))
+    }
+  }
+
+  effectsQueue.forEach((effect: any) => effect())
 }
