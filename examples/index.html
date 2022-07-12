@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <div id="app"></div>
+  </body>
   <script src="../node_modules/@vue/reactivity/dist/reactivity.global.js"></script>
   <script>
     const { reactive, shallowReactive, readonly, shallowReadonly, effect } =
@@ -22,7 +24,7 @@
 
     effect(
       () => {
-        console.log('effect >>> ', JSON.stringify(r1.arr))
+        console.log('r1.foo >>> ', r1.foo.baz)
       }
       // {
       //   scheduler(effect) {
@@ -32,7 +34,7 @@
     )
 
     setTimeout(() => {
-      r1.arr.push(4)
+      r1.foo.baz = 'baz'
     }, 1000)
 
     // const r2 = shallowReactive(obj)

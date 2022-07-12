@@ -74,6 +74,9 @@ export function trigger(target, key, value, type) {
         // const effects = depsMap.get('length')
         // effects.forEach((effect) => effect())
         add(depsMap.get('length'))
+      } else {
+        // 对象新增
+        add(depsMap.get(key))
       }
     } else {
       // const effects = depsMap.get(key) || []
