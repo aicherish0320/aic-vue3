@@ -20,9 +20,16 @@
     }
     const r1 = reactive(obj)
 
-    effect(() => {
-      console.log('effect >>> ', JSON.stringify(r1.arr))
-    })
+    effect(
+      () => {
+        console.log('effect >>> ', JSON.stringify(r1.arr))
+      }
+      // {
+      //   scheduler(effect) {
+      //     console.log('effect >>> ', effect)
+      //   }
+      // }
+    )
 
     setTimeout(() => {
       r1.arr.push(4)
