@@ -7,3 +7,11 @@
   - proxy，不需要重写属性，而且不用一上来就默认递归
 - 整体 vue3 架构发生了变化
 - Vue3 对编译时的内容，进行了重写 template -> render 函数 静态编辑还有属性标记 patchFlag 动态标记、静态提升、函数缓存、Vue3 使用了最长子序列重写了 diff 算法。vue3 template 中 blockTree 的概念
+
+# Vue3 由 5 个核心模块组成
+
+- @vue/reactivity
+- @vue/compiler-dom
+- @vue/compiler-core
+- @vue/runtime-dom
+- @vue/runtime-core

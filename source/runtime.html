@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script src="./node_modules/@vue/runtime-dom/dist/runtime-dom.global.js"></script>
+  <script>
+    const { createApp, h, reactive } = VueRuntimeDOM
+
+    // const App = {
+    //   render() {
+    //     return h('div', { id: 'idd' }, 'Hello')
+    //   }
+    // }
+
+    const comp1 = {
+      render() {
+        return h('p', 'Hello')
+      }
+    }
+    const comp2 = {
+      render() {
+        return h('p', 'World')
+      }
+    }
+
+    const App = {
+      props: {
+        a: Number
+      },
+      setup(props) {
+        const state = reactive({ count: 0 })
+        const handleClick = () => state.count++
+        return () =>
+          h(
+            'h1',
+            { id: 'idd', onclick: handleClick },
+            state.count,
+            props.a,
+            h(comp1),
+            h(comp2)
+          )
+      }
+    }
+
+    const app = createApp(App, { a: 1 })
+    app.mount('#app')
+  </script>
+</html>
