@@ -14,7 +14,7 @@ export const patchProp = (el, key, prevVal, nextVal) => {
     default:
       if (/^on[a-z]/.test(key)) {
         // el.addEventListener
-        patchEvent(el, nextVal)
+        patchEvent(el, key, nextVal)
       } else {
         // el.setAttribute()
         patchAttr(el, key, nextVal)
