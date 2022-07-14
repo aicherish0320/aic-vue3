@@ -14,7 +14,8 @@
     const { createApp } = VueRuntimeDOM
 
     const App = {
-      setup() {
+      setup(props, context) {
+        console.log(props, context)
         return () => {}
       }
     }
