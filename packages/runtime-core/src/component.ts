@@ -14,7 +14,8 @@ export function createComponentInstance(vNode) {
     bc: null,
     m: null,
     ctx: {},
-    proxy: {}
+    proxy: {},
+    update: null
   }
 
   instance.ctx = { _: instance }

@@ -1,4 +1,5 @@
 import { createRenderer } from '@vue/runtime-core'
+export { h, reactive, ref } from '@vue/runtime-core'
 import { extend } from '@vue/shared'
 import { nodeOps } from './nodeOps'
 import { patchProp } from './patchProp'

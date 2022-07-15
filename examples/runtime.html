@@ -11,12 +11,23 @@
   </body>
   <script src="../packages/runtime-dom/dist/runtime-dom.global.js"></script>
   <script>
-    const { createApp } = VueRuntimeDOM
+    const { createApp, h, reactive } = VueRuntimeDOM
 
     const App = {
       setup(props, context) {
-        console.log(props, context)
-        return () => {}
+        const state = reactive({ count: 1 })
+        const fn = () => {
+          state.count++
+        }
+        return {
+          state,
+          fn
+        }
+      },
+      render(proxy) {
+        return h('div', { onclick: proxy.fn, style: { background: '#f00' } }, [
+          h('span', { style: { background: '#f0f' } }, proxy.state.count)
+        ])
       }
     }
     const app = createApp(App, { a: 1 })
